@@ -13,10 +13,12 @@ int registrar() // função de registrar cpfs
 	char cargo[40];
 	//final das variáveis
 	
+	system("cls");
+	
 	printf("Digite o CPF a ser cadastrado: "); //coleta de informação do usuário
 	scanf("%s",cpf); // %s refere-se à string
 	
-	strcpy(arquivo, cpf); // copiar valores das strings
+	strcpy(arquivo, cpf); // dar o nome do arquivo como cpf
 	
 	FILE *file; // cria arquivo
 	file = fopen(arquivo,"w"); // cria arquivo sendo w (write) para escrever novo
@@ -86,64 +88,91 @@ int deletar()
 	printf("Digite o CPF do usuário a ser deletado: ");
 	scanf("%s",cpf);
 	
-	remove(cpf);
-	
 	FILE *file; //função chamando o arquivo .FILE
 	file = fopen(cpf,"r"); //acessa o arquivo em modo "r"read
 	
 	if(file == NULL) // Não havendo match de CPF, executa esta função
 	{
-		printf("O usuário não se encontra no sistema.\n");
+		printf("O usuário não se encontra no sistema!\n");
 		system("pause");	
+	}
+	else
+	{ 
+		fclose(file);
+		remove(cpf);
+		printf("O usuário foi deletado com sucesso!\n");
+		system("pause");
 	}
 }
 
 int main()
-   {
+{
 	int opcao=0; // Definindo variáveis
 	int laco=1;
+	char senhadigitada[10]="a";
+	int comparacao;
+	int voltar=1;
+	// fim das variáveis
 	
-	for(laco=1;laco=1;) // estrutura de repetição
+	setlocale(LC_ALL, "Portuguese"); //definindo linguagem
+	
+	while(voltar == 1)
 	{
-		system("cls");
+		system ("cls");
+		printf("### Cartório da EBAC ###\n\n");
+		printf("Login de administrador.\nDigite a senha: ");
+		scanf("%s",senhadigitada);
 		
-		setlocale(LC_ALL, "Portuguese"); //definindo linguagem
+		comparacao = strcmp(senhadigitada, "admin"); // essa função salva o valor 0 caso o digitado dentro de senhadigitada for admin
+		// strcmp é comparacao de string. sendo igual, retorna valor 0, sendo diferente, valor 1
 	
-		printf("### Cartório da EBAC ###\n\n"); // início do menu
-		printf("Escolha no menu qual função deseja utilizar:\n\n");
-		printf("\t 1 - Registrar nomes\n");
-		printf("\t 2 - Consultar nomes\n");
-		printf("\t 3 - Deletar nomes\n");
-		printf("\t 4 - Sair do sistema\n\n");
-		printf("Opção:"); // fim do menu
-	
-		scanf("%d", &opcao); // armazenando escolha do usuário
-	
-		system("cls"); // limpar o terminal
-		
-		switch(opcao) // início da seleção do menu
+		if(comparacao == 0)
 		{
-			case 1:
-			registrar(); // chama de funções
-			break;
+			while(laco == 1) // estrutura de repetição
+			{
+				system("cls");
+				printf("### Cartório da EBAC ###\n\n"); // início do menu
+				printf("Escolha no menu qual função deseja utilizar:\n\n");
+				printf("\t 1 - Registrar nomes\n");
+				printf("\t 2 - Consultar nomes\n");
+				printf("\t 3 - Deletar nomes\n");
+				printf("\t 4 - Sair do sistema\n\n");
+				printf("Opção:"); // fim do menu
 			
-			case 2:
-			consultar();
-			break;
+				scanf("%d", &opcao); // armazenando escolha do usuário
 			
-			case 3:
-			deletar();
-			break;
-			
-			case 4:
-			printf("Obrigado por utilizar o sistema!\n");
-			return 0;
-			break;
-			
-			default:
-			printf("Essa opção não está disponível!\n");
-			system("pause");
-		}// Fim da seleção
+				system("cls"); // limpar o terminal
+				
+				switch(opcao) // início da seleção do menu
+				{
+					case 1:
+					registrar(); // chama de funções
+					break;
+					
+					case 2:
+					consultar();
+					break;
+					
+					case 3:
+					deletar();
+					break;
+					
+					case 4:
+					printf("Obrigado por utilizar o sistema!\n");
+					return 0;
+					break;
+					
+					default:
+					printf("Essa opção não está disponível!\n");
+					system("pause");
+				}// Fim da seleção
+			}//fim função for
+		}//fim função if
+		else
+			printf("Senha incorreta!\n");
+		
+		system("pause");
+		system("cls");
 	}
 }
 	
