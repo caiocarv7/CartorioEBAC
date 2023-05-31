@@ -169,10 +169,9 @@ int main()
 			}//fim função for
 		}//fim função if
 		else
+			system("cls");
 			printf("Senha incorreta!\n");
-		
-		system("pause");
-		system("cls");
+			system("pause");
 	}
 }
 	
